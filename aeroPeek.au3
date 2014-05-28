@@ -4,7 +4,7 @@ Global Const $VK_SCROLL = 0x91
 Global Const $VK_CAPITAL = 0x14
 
 Global $mouseCoord
-Global $doLock = False
+Global $doLock = True
 Global $mouse;
 
 Global $currentTimer = 0
@@ -24,7 +24,15 @@ While 1
    $needLock = False ;
    mainWait();
    ConsoleWrite('Idle time passed'&@CRLF);
-   MouseMove(2880,1800);
+   $hWnd = DllCall("user32.dll", "hwnd", "FindWindow", "str", "Shell_TrayWnd", "int", 0)
+   $pickerPost = WinGetPos($hWnd[0]);   
+   
+   ConsoleWrite($hWnd[0]&@CRLF);
+   ConsoleWrite($pickerPost[0]&@CRLF);
+   ConsoleWrite($pickerPost[1]&@CRLF);
+   ConsoleWrite($pickerPost[2]&@CRLF);
+   ConsoleWrite($pickerPost[3]&@CRLF);
+   MouseMove($pickerPost[2]-5,$pickerPost[1]+$pickerPost[3]);
    waitWake();
    ConsoleWrite('Wake'&@CRLF);
    ;And $CmdLineRaw == '/s'
